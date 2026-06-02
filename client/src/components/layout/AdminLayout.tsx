@@ -4,6 +4,9 @@ import { useAuth } from '../../hooks/useAuth'
 
 const sidebarLinks = [
   { to: '/admin', label: '仪表盘', icon: '📊', end: true },
+  { to: '/admin/pending-users', label: '用户审批', icon: '👥' },
+  { to: '/admin/pending-courses', label: '课程审批', icon: '📋' },
+  { to: '/admin/all-schedules', label: '全景课表', icon: '📅' },
   { to: '/admin/courses', label: '课程管理', icon: '📚' },
   { to: '/admin/teachers', label: '教师管理', icon: '👨‍🏫' },
   { to: '/admin/news', label: '新闻管理', icon: '📰' },

@@ -56,7 +56,7 @@ export default function CourseDetail() {
     if (!realCourse?.teacher_id) { alert('该课程暂未分配教师，无法预约'); return }
     setBooking(true)
     try {
-      await bookingsApi.book(realCourse.id, realCourse.teacher_id, msg)
+      await bookingsApi.book(realCourse.id, realCourse.teacher_id, [])
       setBooked(true)
     } catch (err: any) {
       alert(err.response?.data?.error || '预约失败')

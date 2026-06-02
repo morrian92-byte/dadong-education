@@ -31,7 +31,9 @@ export const authApi = {
   login: (data: LoginRequest) =>
     api.post<LoginResponse>('/auth/login', data),
   register: (data: RegisterRequest) =>
-    api.post<LoginResponse>('/auth/register', data),
+    api.post<{ message: string }>('/auth/register', data),
+  teacherRegister: (data: RegisterRequest) =>
+    api.post<{ message: string }>('/auth/teacher-register', data),
   adminLogin: (data: LoginRequest) =>
     api.post<LoginResponse>('/auth/admin-login', data),
 }
@@ -80,16 +82,22 @@ export const contactApi = {
 export const bookingsApi = {
   // 学生：我的约课
   myBookings: () => api.get<Booking[]>('/student/bookings'),
-  // 学生：预约课程
-  book: (course_id: number, teacher_id: number, message?: string) =>
-    api.post<Booking>('/student/book', { course_id, teacher_id, message }),
+  // 学生：预约课程（含可选时间）
+  book: (course_id: number, teacher_id: number, time_options: string[], message?: string) =>
+    api.post<Booking>('/student/book', { course_id, teacher_id, time_options, message }),
+  // 学生：确认约课
+  confirm: (id: number) => api.put<Booking>(`/student/bookings/${id}/confirm`),
   // 学生：取消约课
   cancel: (id: number) => api.delete(`/student/bookings/${id}`),
   // 老师：查看学生约课
   teacherBookings: () => api.get<Booking[]>('/teacher/bookings'),
-  // 老师：审批
-  review: (id: number, status: 'approved' | 'rejected') =>
-    api.put<Booking>(`/teacher/bookings/${id}`, { status }),
+  // 老师：挑选时间
+  pickTime: (id: number, selected_time: string) =>
+    api.put<Booking>(`/teacher/bookings/${id}/pick`, { selected_time }),
+  // 老师：创建课程
+  createCourse: (data: any) => api.post('/teacher/courses', data),
+  // 老师：我的课程
+  myCourses: () => api.get<Course[]>('/teacher/courses'),
 }
 
 // ============ 仪表盘 API ============

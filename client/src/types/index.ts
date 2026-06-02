@@ -20,6 +20,7 @@ export interface Course {
   image: string
   featured: boolean
   teacher_id?: number
+  status?: string
   created_at: string
   updated_at: string
 }
@@ -80,8 +81,10 @@ export interface Booking {
   student_id: number
   course_id: number
   teacher_id: number
-  status: 'pending' | 'approved' | 'rejected' | 'cancelled'
+  status: 'pending' | 'teacher_picked' | 'confirmed' | 'rejected' | 'cancelled'
   message: string
+  time_options: string
+  selected_time: string
   created_at: string
   course?: { id: number; title: string; category: string }
   student?: { id: number; username: string; phone: string }

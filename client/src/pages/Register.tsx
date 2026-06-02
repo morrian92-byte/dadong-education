@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { authApi } from '../utils/api'
-import { useAuth } from '../hooks/useAuth'
 
 export default function Register() {
   const [name, setName] = useState('')
@@ -10,22 +9,33 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
-  const nav = useNavigate()
+  const [done, setDone] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
     try {
-      const res = await authApi.register({ username, password, name, phone })
-      login(res.data.token, res.data.user)
-      nav('/student/dashboard')
+      await authApi.register({ username, password, name, phone })
+      setDone(true)
     } catch (err: any) {
       setError(err.response?.data?.error || '注册失败')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (done) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 w-full max-w-md text-center">
+          <span className="text-5xl">📩</span>
+          <h1 className="text-2xl font-bold text-slate-900 mt-4">注册已提交</h1>
+          <p className="text-slate-500 mt-2">你的账号正在等待管理员审批，审批通过后即可登录。</p>
+          <Link to="/login" className="inline-block mt-6 text-blue-600 hover:underline">返回登录页</Link>
+        </div>
+      </div>
+    )
   }
 
   return (

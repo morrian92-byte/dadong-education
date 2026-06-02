@@ -11,6 +11,7 @@ import NewsDetail from './pages/NewsDetail'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import TeacherRegister from './pages/TeacherRegister'
 import StudentDashboard from './pages/student/Dashboard'
 import TeacherDashboard from './pages/teacher/Dashboard'
 import AdminLogin from './pages/admin/AdminLogin'
@@ -19,6 +20,9 @@ import CourseManager from './pages/admin/CourseManager'
 import TeacherManager from './pages/admin/TeacherManager'
 import NewsManager from './pages/admin/NewsManager'
 import ContactList from './pages/admin/ContactList'
+import PendingUsers from './pages/admin/PendingUsers'
+import PendingCourses from './pages/admin/PendingCourses'
+import AllSchedules from './pages/admin/AllSchedules'
 
 export default function App() {
   return (
@@ -35,6 +39,7 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="teacher-register" element={<TeacherRegister />} />
       </Route>
 
       {/* 学生端 */}
@@ -51,6 +56,9 @@ export default function App() {
         <Route path="teachers" element={<TeacherManager />} />
         <Route path="news" element={<NewsManager />} />
         <Route path="contacts" element={<ContactList />} />
+        <Route path="pending-users" element={<PendingUsers />} />
+        <Route path="pending-courses" element={<PendingCourses />} />
+        <Route path="all-schedules" element={<AllSchedules />} />
       </Route>
     </Routes>
   )

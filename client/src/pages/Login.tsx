@@ -62,10 +62,10 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-slate-500 mt-6">
-          还没有账号？
-          <Link to="/register" className="text-blue-600 hover:underline ml-1">立即注册</Link>
-        </p>
+        <div className="text-center text-sm text-slate-500 mt-6 space-y-1">
+          <p>还没有账号？<Link to="/register" className="text-blue-600 hover:underline ml-1">学生注册</Link></p>
+          <p>老师？<Link to="/teacher-register" className="text-blue-600 hover:underline ml-1">教师注册</Link></p>
+        </div>
       </div>
     </div>
   )
