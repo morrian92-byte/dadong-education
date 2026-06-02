@@ -3,7 +3,7 @@ import { contactApi } from '../../utils/api'
 import type { ContactForm } from '../../types'
 
 export default function ContactList() {
-  const [contacts, setContacts] = useState<(ContactForm & { id: number; created_at: string })[]>([])
+  const [contacts, setContacts] = useState<ContactForm[]>([])
 
   const load = () => {
     contactApi.getAll()
@@ -51,7 +51,7 @@ export default function ContactList() {
                   <p className="text-sm text-slate-600 leading-relaxed">{c.message}</p>
                 </div>
                 <button
-                  onClick={() => handleDelete(c.id)}
+                  onClick={() => handleDelete(c.id!)}
                   className="text-red-500 hover:text-red-700 text-sm ml-4 shrink-0"
                 >
                   删除
