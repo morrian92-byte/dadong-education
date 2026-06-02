@@ -9,6 +9,10 @@ import About from './pages/About'
 import News from './pages/News'
 import NewsDetail from './pages/NewsDetail'
 import Contact from './pages/Contact'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import StudentDashboard from './pages/student/Dashboard'
+import TeacherDashboard from './pages/teacher/Dashboard'
 import AdminLogin from './pages/admin/AdminLogin'
 import Dashboard from './pages/admin/Dashboard'
 import CourseManager from './pages/admin/CourseManager'
@@ -29,9 +33,17 @@ export default function App() {
         <Route path="news" element={<News />} />
         <Route path="news/:id" element={<NewsDetail />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
 
-      {/* 后台管理 */}
+      {/* 学生端 */}
+      <Route path="/student/dashboard" element={<StudentDashboard />} />
+
+      {/* 教师端 */}
+      <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+
+      {/* 管理员后台（隐藏入口，不链接到前台） */}
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />

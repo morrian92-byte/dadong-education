@@ -1,4 +1,8 @@
-import { useParams, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { coursesApi, bookingsApi } from '../utils/api'
+import { useAuth } from '../hooks/useAuth'
+import type { Course } from '../types'
 
 const courseData: Record<number, {
   title: string; category: string; grades: string; price: string; emoji: string
@@ -37,6 +41,27 @@ const courseData: Record<number, {
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>()
   const course = courseData[Number(id)]
+  const { isLoggedIn, isStudent } = useAuth()
+  const nav = useNavigate()
+  const [realCourse, setRealCourse] = useState<Course | null>(null)
+  const [booking, setBooking] = useState(false)
+  const [booked, setBooked] = useState(false)
+  const [msg, setMsg] = useState('')
+
+  useEffect(() => {
+    coursesApi.getById(Number(id)).then(r => setRealCourse(r.data)).catch(() => {})
+  }, [id])
+
+  const handleBook = async () => {
+    if (!realCourse?.teacher_id) { alert('该课程暂未分配教师，无法预约'); return }
+    setBooking(true)
+    try {
+      await bookingsApi.book(realCourse.id, realCourse.teacher_id, msg)
+      setBooked(true)
+    } catch (err: any) {
+      alert(err.response?.data?.error || '预约失败')
+    } finally { setBooking(false) }
+  }
 
   if (!course) {
     return (
@@ -73,7 +98,16 @@ export default function CourseDetail() {
               <p className="mt-4 text-white/80 max-w-2xl">{course.desc}</p>
               <div className="mt-6 flex items-center gap-4">
                 <span className="text-3xl font-bold text-white">{course.price}</span>
-                <Link to="/contact" className="btn-accent">立即报名</Link>
+                {isStudent ? (
+                  booked ? (
+                    <span className="bg-green-400 text-green-900 px-4 py-2 rounded-lg font-medium">已提交预约</span>
+                  ) : (
+                    <button onClick={handleBook} disabled={booking}
+                      className="btn-accent">{booking ? '预约中...' : '预约课程'}</button>
+                  )
+                ) : isLoggedIn ? null : (
+                  <Link to="/login" className="btn-accent">登录后预约</Link>
+                )}
               </div>
             </div>
           </div>

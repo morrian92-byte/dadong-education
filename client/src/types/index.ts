@@ -1,3 +1,14 @@
+// ========== 用户 ==========
+export type UserRole = 'admin' | 'teacher' | 'student'
+
+export interface UserInfo {
+  id: number
+  username: string
+  role: UserRole
+  name?: string
+  phone?: string
+}
+
 // ========== 课程 ==========
 export interface Course {
   id: number
@@ -8,6 +19,7 @@ export interface Course {
   price: string
   image: string
   featured: boolean
+  teacher_id?: number
   created_at: string
   updated_at: string
 }
@@ -44,21 +56,36 @@ export interface ContactForm {
   created_at?: string
 }
 
-// ========== 管理员 ==========
-export interface AdminUser {
-  id: number
-  username: string
-}
-
-// ========== 登录 ==========
+// ========== 登录/注册 ==========
 export interface LoginRequest {
   username: string
   password: string
 }
 
+export interface RegisterRequest {
+  username: string
+  password: string
+  name: string
+  phone: string
+}
+
 export interface LoginResponse {
   token: string
-  user: AdminUser
+  user: UserInfo
+}
+
+// ========== 约课 ==========
+export interface Booking {
+  id: number
+  student_id: number
+  course_id: number
+  teacher_id: number
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled'
+  message: string
+  created_at: string
+  course?: { id: number; title: string; category: string }
+  student?: { id: number; username: string; phone: string }
+  teacher?: { id: number; username: string }
 }
 
 // ========== 仪表盘统计 ==========
@@ -67,4 +94,5 @@ export interface DashboardStats {
   teachers: number
   news: number
   contacts: number
+  bookings: number
 }
