@@ -36,10 +36,12 @@ export interface News {
 
 // ========== 联系表单 ==========
 export interface ContactForm {
+  id?: number
   name: string
   phone: string
   email: string
   message: string
+  created_at?: string
 }
 
 // ========== 管理员 ==========
